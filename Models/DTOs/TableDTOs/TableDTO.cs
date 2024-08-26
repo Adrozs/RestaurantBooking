@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RestaurantBooking.Models.DTOs
+namespace RestaurantBooking.Models.DTOs.TableDTOs
 {
     public class TableDTO
     {
