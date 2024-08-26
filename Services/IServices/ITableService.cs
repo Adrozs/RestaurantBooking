@@ -1,4 +1,4 @@
-﻿using RestaurantBooking.Models.DTOs;
+﻿using RestaurantBooking.Models.DTOs.TableDTOs;
 
 namespace RestaurantBooking.Services.IServices
 {
