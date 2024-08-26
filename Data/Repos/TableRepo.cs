@@ -15,13 +15,8 @@ namespace RestaurantBooking.Data.Repos
 
         public async Task CreateTableAsync(Table table)
         {
-            // if existing table isn't null throw exception (this should never happen, hence the exception
-            if (await _context.Tables.AnyAsync(t => t.Id == table.Id))
-                throw new ArgumentException("Failed to create table, table already exists.");
-
             await _context.AddAsync(table);
             await _context.SaveChangesAsync();
-
         }
 
         public async Task DeleteTableAsync(Table table)
