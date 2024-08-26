@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using RestaurantBooking.Data.Repos.IRepos;
 using RestaurantBooking.Models;
-using RestaurantBooking.Models.DTOs;
+using RestaurantBooking.Models.DTOs.TableDTOs;
 using RestaurantBooking.Services.IServices;
 
 namespace RestaurantBooking.Services
@@ -21,7 +21,6 @@ namespace RestaurantBooking.Services
             var existingTable = await _tableRepo.GetTableByTableNumberAsync(tableDto.TableNumber);
             if (existingTable != null)
                 throw new InvalidOperationException("Table number already taken.");
-
 
             // Map dto to object
             var table = new Table
@@ -101,6 +100,9 @@ namespace RestaurantBooking.Services
 
             // Get table
             var table = await _tableRepo.GetTableByIdAsync(tableDto.Id);
+
+            if (table == null)
+                throw new InvalidOperationException("Table was not found.");
 
             // Update properties
             table.TableNumber = tableDto.TableNumber;
