@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestaurantBooking.Models.DTOs;
+using RestaurantBooking.Models.DTOs.TableDTOs;
 using RestaurantBooking.Services.IServices;
 
 namespace RestaurantBooking.Controllers
