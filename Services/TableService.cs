@@ -19,7 +19,7 @@ namespace RestaurantBooking.Services
         {
             // Make sure table number isn't already taken
             var existingTable = await _tableRepo.GetTableByTableNumberAsync(tableDto.TableNumber);
-            if (existingTable.TableNumber == tableDto.TableNumber)
+            if (existingTable != null)
                 throw new InvalidOperationException("Table number already taken.");
 
 
@@ -96,7 +96,7 @@ namespace RestaurantBooking.Services
         {
             // Make sure table number isn't already taken
             var existingTable = await _tableRepo.GetTableByTableNumberAsync(tableDto.TableNumber);
-            if (existingTable.TableNumber == tableDto.TableNumber)
+            if (existingTable != null)
                 throw new InvalidOperationException("Table number already taken.");
 
             // Get table
