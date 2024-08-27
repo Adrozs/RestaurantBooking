@@ -21,6 +21,8 @@ builder.Services.AddScoped<ITableService, TableService>();
 builder.Services.AddScoped<ITableRepo, TableRepo>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
+builder.Services.AddScoped<IDishService, DishService>();
+builder.Services.AddScoped<IDishRepo, DishRepo>();
 
 
 

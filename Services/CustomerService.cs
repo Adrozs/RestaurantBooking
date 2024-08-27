@@ -70,6 +70,7 @@ namespace RestaurantBooking.Services
             // Update customer object
             await _customerRepo.UpdateCustomerAsync(customer); 
         }
+
         public async Task DeleteCustomerAsync(int customerId)
         {
             // Get existing customer object
