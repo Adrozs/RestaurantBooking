@@ -19,7 +19,14 @@ namespace RestaurantBooking.Controllers
         [HttpPost("CreateCustomer")]
         public async Task<ActionResult> CreateCustomerAsync([FromBody] CustomerNoIdDTO customer)
         {
-            await _customerService.CreateCustomerAsync(customer);
+            try
+            {
+                await _customerService.CreateCustomerAsync(customer);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return Ok("Customer created successfully.");
         }
@@ -40,7 +47,7 @@ namespace RestaurantBooking.Controllers
         {
             var customer = await _customerService.GetCustomerByIdAsync(customerId);
             if (customer == null)
-                return StatusCode(404, "No matching customer found");
+                return StatusCode(404, "No matching customer found.");
 
 
             return Ok(customer);
