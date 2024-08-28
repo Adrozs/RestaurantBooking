@@ -7,6 +7,6 @@ namespace RestaurantBooking.Models.DTOs.TableDTOs
         public int Id { get; set; }
         public int TableNumber { get; set; }
         public int Seats { get; set; }
-        public bool IsReserved { get; set; }
+        public DateTime? ReservedUntil { get; set; }
     }
 }
