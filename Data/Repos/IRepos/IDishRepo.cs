@@ -6,8 +6,10 @@ namespace RestaurantBooking.Data.Repos.IRepos
     {
         public Task CreateDishAsync(Dish dish);
         public Task<IEnumerable<Dish>> GetAllDishesAsync();
+        public Task<IEnumerable<Dish>> GetAvailableDishesAsync();
         public Task<Dish> GetDishByIdAsync(int dishId);
         public Task UpdateDishAsync(Dish dish);
         public Task DeleteDishAsync(Dish dish);
+        
     }
 }
