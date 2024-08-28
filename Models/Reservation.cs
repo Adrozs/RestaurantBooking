@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestaurantBooking.Models
 {
@@ -10,12 +9,16 @@ namespace RestaurantBooking.Models
 
         [Required]
         public DateTime ReservationTime { get; set; }
+        public int ReservationDurationMinutes { get; set; }
 
         [Required]
         public int Guests { get; set; }
+        public string CustomerName { get; set; }
+        public decimal TotalBill { get; set; }
 
 
-        
+
+
         // Foreign keys
         [Required]
         public int TableId { get; set; }
@@ -24,5 +27,9 @@ namespace RestaurantBooking.Models
         [Required]
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
+
+        
+        // Initialize empty list upon creation
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

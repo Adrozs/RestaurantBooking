@@ -7,20 +7,16 @@ namespace RestaurantBooking.Models
         [Key]
         public int Id { get; set; }
 
-        public int? Bill { get; set; }
-
+        public string? SpecialInstructions { get; set; }
 
 
         // Foreign keys
+        [Required]
+        public int ReservationId { get; set; }
+        public Reservation Reservation { get; set; }
 
         [Required]
-        public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
-
-
-        // Navigation property to OrderDishes for many-to-many relationship
-        public ICollection<OrderDish> OrderDishes { get; set; }
-
-
+        public int DishId { get; set; }
+        public Dish Dish { get; set; }
     }
 }
