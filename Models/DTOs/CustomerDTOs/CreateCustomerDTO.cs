@@ -2,7 +2,7 @@
 
 namespace RestaurantBooking.Models.DTOs.CustomerDTOs
 {
-    public class CustomerNoIdDTO
+    public class CreateCustomerDTO
     {
         public string Name { get; set; }
 
