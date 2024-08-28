@@ -182,16 +182,31 @@
   }
 
 #### `GET /api/Customer/GetReservationById`
-- **Purpose**: Retrieve a specific reservation
+- **Purpose**: Retrieve a specific reservation and all its details
 - **Request Body**:
   ```json
   {
-    "reservationTime": "2024-08-28T16:00:35.510Z",
-    "reservationDurationMinutes": 200, 
-    "guests": 1,
-    "tableId": 2,
-    "customerId": 42
-  }
+  "reservationTime": "2024-08-28T12:54:58.803",
+  "reservationDurationMinutes": 120,
+  "guests": 2,
+  "totalBill": 45,
+  "orderedDishes": [
+    {
+      "dishId": 3,
+      "dishName": "Soup",
+      "price": 5,
+      "specialInstructions": "string"
+    },
+    {
+      "dishId": 2,
+      "dishName": "Meatballs",
+      "price": 20,
+      "specialInstructions": "extra spicy"
+    }
+  ],
+  "tableId": 4,
+  "customerId": 2
+}
 
 #### `POST /api/Customer/UpdateReservation`
 - **Purpose**: Change a specific reservations information 
