@@ -12,13 +12,13 @@ namespace RestaurantBooking.Models
         public string Name { get; set; }
 
         [Required]
-        public int Price { get; set; }
+        public decimal Price { get; set; }
 
         [Required]
         public bool IsAvailable { get; set; }
 
 
         // Navigation property to OrderDishes for many-to-many relationship
-        public ICollection<OrderDish> OrderDishes { get; set; }
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }
