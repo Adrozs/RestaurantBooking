@@ -25,9 +25,10 @@ namespace RestaurantBooking.Data.Repos
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Table>> GetAllAvailableTablesAsync()
+        public async Task<IEnumerable<Table>> GetAvailableTablesAsync()
         {
-            return await _context.Tables.Where(t => t.IsReserved == false).ToListAsync();
+            // Return all tables where the current time is more than the reserved time
+            return await _context.Tables.Where(t => DateTime.Now > t.ReservedUntil).ToListAsync();
         }
 
         public async Task<IEnumerable<Table>> GetAllTablesAsync()
@@ -49,6 +50,14 @@ namespace RestaurantBooking.Data.Repos
         {
             _context.Tables.Update(table);
             await _context.SaveChangesAsync();  
+        }
+
+        public async Task ReserveUntilAsync(Table table, DateTime resTime)
+        {
+            table.ReservedUntil = resTime;
+            
+            _context.Update(table);
+            await _context.SaveChangesAsync();
         }
     }
 }

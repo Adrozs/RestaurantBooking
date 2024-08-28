@@ -27,7 +27,6 @@ namespace RestaurantBooking.Services
             {
                 Seats = tableDto.Seats,
                 TableNumber = tableDto.TableNumber,
-                IsReserved = false,
             };
 
             await _tableRepo.CreateTableAsync(table);
@@ -43,9 +42,9 @@ namespace RestaurantBooking.Services
             await _tableRepo.DeleteTableAsync(table);
         }
 
-        public async Task<IEnumerable<TableDTO>> GetAllAvailableTablesAsync()
+        public async Task<IEnumerable<TableDTO>> GetAvailableTablesAsync()
         {
-            var availableTables = await _tableRepo.GetAllAvailableTablesAsync();
+            var availableTables = await _tableRepo.GetAvailableTablesAsync();
 
             // Return mapped dto 
             return availableTables.Select(t => new TableDTO
@@ -53,7 +52,7 @@ namespace RestaurantBooking.Services
                 Id = t.Id,
                 TableNumber = t.TableNumber,
                 Seats = t.Seats,
-                IsReserved = t.IsReserved
+                ReservedUntil = t.ReservedUntil
             }).ToList();
         }
 
@@ -70,7 +69,7 @@ namespace RestaurantBooking.Services
                 Id= t.Id,
                 TableNumber = t.TableNumber,
                 Seats = t.Seats,
-                IsReserved = t.IsReserved
+                ReservedUntil = t.ReservedUntil
             }).ToList();
         }
 
@@ -87,11 +86,11 @@ namespace RestaurantBooking.Services
                 Id = table.Id,
                 TableNumber = table.TableNumber,
                 Seats = table.Seats,
-                IsReserved = table.IsReserved
+                ReservedUntil = table.ReservedUntil
             };
         }
 
-        public async Task UpdateTableAsync(TableDTO tableDto)
+        public async Task UpdateTableAsync(UpdateTableDTO tableDto)
         {
             // Make sure table number isn't already taken
             var existingTable = await _tableRepo.GetTableByTableNumberAsync(tableDto.TableNumber);
@@ -107,7 +106,7 @@ namespace RestaurantBooking.Services
             // Update properties
             table.TableNumber = tableDto.TableNumber;
             table.Seats = tableDto.Seats;
-            table.IsReserved = tableDto.IsReserved;
+            table.ReservedUntil = tableDto.ReservedUntil;
 
             await _tableRepo.UpdateTableAsync(table);
         }

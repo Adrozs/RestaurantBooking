@@ -13,8 +13,8 @@ namespace RestaurantBooking.Models
         [Required]
         public int Seats { get; set; }
 
-        [Required]
-        public bool IsReserved { get; set; } = false; // Tables aren't reserved when created
+        public DateTime? ReservedUntil { get; set; }
+
 
         public ICollection<Reservation> Reservations { get; set;}
 
