@@ -1,6 +1,5 @@
-﻿    using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using RestaurantBooking.Models;
 using RestaurantBooking.Models.DTOs.DishDTOs;
 using RestaurantBooking.Services.IServices;
 
@@ -18,7 +17,7 @@ namespace RestaurantBooking.Controllers
         }
 
         [HttpPost("CreateDish")]
-        public async Task<ActionResult> CreateDishAsync([FromBody] DishNoIdDTO dish)
+        public async Task<ActionResult> CreateDishAsync([FromBody] CreateDishDTO dish)
         {
             try
             {
@@ -30,7 +29,7 @@ namespace RestaurantBooking.Controllers
             }
 
 
-            return Ok("Customer created successfully.");
+            return Ok("Dish created successfully.");
         }
 
         [HttpGet("GetAllDishes")]
@@ -39,8 +38,19 @@ namespace RestaurantBooking.Controllers
            var dishes = await _dishService.GetAllDishesAsync();
 
             if (dishes.IsNullOrEmpty())
-                return StatusCode(404, "No dishes were found");
+                return NotFound("No dishes were found");
                 
+            return Ok(dishes);
+        }
+
+        [HttpGet("GetAvailableDishes")]
+        public async Task<ActionResult> GetAvailableDishesAsync()
+        {
+            var dishes = await _dishService.GetAvailableDishesAsync();
+
+            if (dishes.IsNullOrEmpty())
+                return NotFound("No available dishes found.");
+
             return Ok(dishes);
         }
 
@@ -50,7 +60,7 @@ namespace RestaurantBooking.Controllers
             var dish = await _dishService.GetDishByIdAsync(dishId);
 
             if (dish == null)
-                return StatusCode(404, "No matching dish found.");
+                return NotFound("No matching dish found.");
 
             return Ok(dish);
         }
