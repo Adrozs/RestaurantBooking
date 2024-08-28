@@ -14,7 +14,7 @@ namespace RestaurantBooking.Services
             _dishRepo = dishRepo;
         }
 
-        public async Task CreateDishAsync(DishNoIdDTO dish)
+        public async Task CreateDishAsync(CreateDishDTO dish)
         {
             var newDish = new Dish
             {
@@ -39,7 +39,22 @@ namespace RestaurantBooking.Services
         {
             var dishes = await _dishRepo.GetAllDishesAsync();
             if (dishes == null)
-                throw new InvalidOperationException("No dishes were not found.");
+                return null;
+
+            return dishes.Select(d => new DishDTO
+            {
+                Id = d.Id,
+                Name = d.Name,
+                Price = d.Price,
+                IsAvailable = d.IsAvailable
+            });
+        }
+
+        public async Task<IEnumerable<DishDTO>> GetAvailableDishesAsync()
+        {
+            var dishes = await _dishRepo.GetAvailableDishesAsync();
+            if (dishes == null)
+                return null;
 
             return dishes.Select(d => new DishDTO
             {
@@ -71,7 +86,7 @@ namespace RestaurantBooking.Services
         {
             var existingDish = await _dishRepo.GetDishByIdAsync(dish.Id);
             if (existingDish == null)
-                throw new InvalidOperationException("Existing dish was not found.");
+                throw new InvalidOperationException("Dish was not found.");
 
             existingDish.Name = dish.Name;
             existingDish.Price = dish.Price;

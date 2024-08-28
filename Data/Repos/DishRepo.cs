@@ -30,6 +30,11 @@ namespace RestaurantBooking.Data.Repos
             return await _context.Dishes.ToListAsync();
         }
 
+        public async Task<IEnumerable<Dish>> GetAvailableDishesAsync()
+        {
+            return await _context.Dishes.Where(d => d.IsAvailable).ToListAsync();
+        }
+
         public async Task<Dish> GetDishByIdAsync(int dishId)
         {
             return await _context.Dishes.SingleOrDefaultAsync(d => d.Id == dishId);
