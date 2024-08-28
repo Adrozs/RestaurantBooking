@@ -23,6 +23,8 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
 builder.Services.AddScoped<IDishService, DishService>();
 builder.Services.AddScoped<IDishRepo, DishRepo>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
+builder.Services.AddScoped<IReservationRepo, ReservationRepo>();
 
 
 
