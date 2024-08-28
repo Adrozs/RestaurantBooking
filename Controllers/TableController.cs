@@ -31,24 +31,13 @@ namespace RestaurantBooking.Controllers
             return Ok();
         }
 
-
-        [HttpDelete("DeleteTable")]
-        public async Task<ActionResult<TableDTO>> DeleteTableAsync([FromQuery] int tableId)
-        {
-            await _tableService.DeleteTableAsync(tableId);
-
-            // Error handling ?
-
-            return Ok();
-        }
-
         [HttpGet("GetAllAvailableTables")]
-        public async Task<ActionResult<TableDTO>> GetAllAvailableTablesAsync()
+        public async Task<ActionResult<TableDTO>> GetAvailableTablesAsync()
         {
-            var availableTables = await _tableService.GetAllAvailableTablesAsync();
+            var availableTables = await _tableService.GetAvailableTablesAsync();
 
             if (availableTables == null)
-                return NotFound();
+                return NotFound("No available tables were found.");
 
             return Ok(availableTables);
         }
@@ -59,7 +48,7 @@ namespace RestaurantBooking.Controllers
             var allTables = await _tableService.GetAllTablesAsync();
 
             if (allTables == null)
-                return NotFound();
+                return NotFound("No tables were found.");
 
             return Ok(allTables);
         }
@@ -70,13 +59,13 @@ namespace RestaurantBooking.Controllers
             var table = await _tableService.GetTableByIdAsync(tableId);
 
             if (table == null)
-                return NotFound();
+                return NotFound("No matching table was found.");
 
             return Ok(table);
         }
 
         [HttpPost("UpdateTable")]
-        public async Task<ActionResult<TableDTO>> UpdateTableAsync([FromBody] TableDTO table)
+        public async Task<ActionResult<TableDTO>> UpdateTableAsync([FromBody] UpdateTableDTO table)
         {
             try
             {
@@ -88,7 +77,23 @@ namespace RestaurantBooking.Controllers
 
             }
 
-            return Ok();
+            return Ok("Table successfully updated.");
+        }
+
+        [HttpDelete("DeleteTable")]
+        public async Task<ActionResult<TableDTO>> DeleteTableAsync([FromQuery] int tableId)
+        {
+            try
+            {
+                await _tableService.DeleteTableAsync(tableId);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok("Table successfully deleted.");
         }
     }
 }
