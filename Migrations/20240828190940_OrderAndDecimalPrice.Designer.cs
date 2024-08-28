@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantBooking.Data;
 
@@ -11,9 +12,11 @@ using RestaurantBooking.Data;
 namespace RestaurantBooking.Migrations
 {
     [DbContext(typeof(BookingDbContext))]
-    partial class BookingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240828190940_OrderAndDecimalPrice")]
+    partial class OrderAndDecimalPrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,7 +95,7 @@ namespace RestaurantBooking.Migrations
 
                     b.HasIndex("ReservationId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("RestaurantBooking.Models.OrderOLD", b =>
@@ -118,7 +121,7 @@ namespace RestaurantBooking.Migrations
 
                     b.HasIndex("ReservationId");
 
-                    b.ToTable("OrderOLD");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("RestaurantBooking.Models.Reservation", b =>
@@ -181,7 +184,7 @@ namespace RestaurantBooking.Migrations
             modelBuilder.Entity("RestaurantBooking.Models.Order", b =>
                 {
                     b.HasOne("RestaurantBooking.Models.Dish", "Dish")
-                        .WithMany("Orders")
+                        .WithMany("OrderDishes")
                         .HasForeignKey("DishId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -240,7 +243,7 @@ namespace RestaurantBooking.Migrations
 
             modelBuilder.Entity("RestaurantBooking.Models.Dish", b =>
                 {
-                    b.Navigation("Orders");
+                    b.Navigation("OrderDishes");
                 });
 
             modelBuilder.Entity("RestaurantBooking.Models.Reservation", b =>
