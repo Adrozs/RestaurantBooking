@@ -17,7 +17,7 @@ namespace RestaurantBooking.Controllers
         }
 
         [HttpPost("CreateCustomer")]
-        public async Task<ActionResult> CreateCustomerAsync([FromBody] CustomerNoIdDTO customer)
+        public async Task<ActionResult> CreateCustomerAsync([FromBody] CreateCustomerDTO customer)
         {
             try
             {
