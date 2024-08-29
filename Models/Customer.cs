@@ -17,9 +17,7 @@ namespace RestaurantBooking.Models
         public string PhoneNumber { get; set; }
 
 
-        // Nav props
-        public ICollection<Reservation> Reservation { get; set; }
-        public ICollection<Order> Order { get; set; }
-
+        // Keeping nav prop in case want to add functionallity to access a customers reservations in the future
+        public ICollection<Reservation> Reservations { get; set; }
     }
 }

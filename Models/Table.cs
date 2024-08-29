@@ -16,6 +16,7 @@ namespace RestaurantBooking.Models
         public DateTime? ReservedUntil { get; set; }
 
 
+        // Keeping nav prop in case want to add functionality to access a tables reservations in the future
         public ICollection<Reservation> Reservations { get; set;}
 
     }

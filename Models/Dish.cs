@@ -16,9 +16,5 @@ namespace RestaurantBooking.Models
 
         [Required]
         public bool IsAvailable { get; set; }
-
-
-        // Navigation property to OrderDishes for many-to-many relationship
-        public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }
