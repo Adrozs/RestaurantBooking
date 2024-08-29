@@ -105,7 +105,6 @@ namespace RestaurantBooking.Services
 
                 var newReservation = new Reservation
                 {
-                    CustomerName = customer.Name,
                     ReservationTime = res.ReservationTime,
                     ReservationDurationMinutes = res.ReservationDurationMinutes,
                     Guests = res.Guests,
@@ -138,13 +137,14 @@ namespace RestaurantBooking.Services
             if (reservations == null)
                 return null;
 
+
             return reservations.Select(r => new ReservationDTO
             {
                 Id = r.Id,
                 ReservationTime = r.ReservationTime,
                 ReservationDurationMinutes= r.ReservationDurationMinutes,
                 Guests = r.Guests,
-                CustomerName = r.CustomerName,
+                CustomerName = r.Customer.Name,
                 TableId = r.TableId,
                 CustomerId = r.CustomerId,
                 TotalBill= r.TotalBill,
@@ -163,7 +163,7 @@ namespace RestaurantBooking.Services
                 ReservationTime = r.ReservationTime,
                 ReservationDurationMinutes = r.ReservationDurationMinutes,
                 Guests = r.Guests,
-                CustomerName = r.CustomerName,
+                CustomerName = r.Customer.Name,
                 TableId = r.TableId,
                 CustomerId = r.CustomerId,
                 TotalBill = r.TotalBill,
@@ -181,7 +181,7 @@ namespace RestaurantBooking.Services
                 ReservationTime = res.ReservationTime,
                 ReservationDurationMinutes = res.ReservationDurationMinutes,
                 Guests = res.Guests,
-                CustomerName = res.CustomerName,
+                CustomerName = res.Customer.Name,
                 TableId = res.TableId,
                 CustomerId = res.CustomerId,
                 TotalBill = res.TotalBill,
@@ -195,7 +195,7 @@ namespace RestaurantBooking.Services
             };
         }
 
-        public async Task UpdateReservationAsync(ReservationDTO resDto)
+        public async Task UpdateReservationAsync(UpdateReservationDTO resDto)
         {
             // Get existing reservation
             var existingRes = await _resRepo.GetReservationByIdAsync(resDto.Id);
@@ -206,11 +206,10 @@ namespace RestaurantBooking.Services
             existingRes.ReservationTime = resDto.ReservationTime;
             existingRes.ReservationDurationMinutes = resDto.ReservationDurationMinutes;
             existingRes.Guests = resDto.Guests;
-            existingRes.CustomerName = resDto.CustomerName;
             existingRes.TotalBill = resDto.TotalBill;
 
 
-            // Update foreign keys
+            // Update foreign keys (if customer switches table or if a customer cancels and a new customer is put on the reservation or similar)
 
             if (existingRes.TableId != resDto.TableId)
             {

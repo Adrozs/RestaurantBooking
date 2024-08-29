@@ -11,7 +11,7 @@ namespace RestaurantBooking.Services.IServices
         public Task<IEnumerable<ReservationDTO>> GetAllReservationsAsync();
         public Task<IEnumerable<ReservationDTO>> GetActiveReservationsAsync();
         public Task<ReservationAndDishesDTO> GetReservationByIdAsync(int resId);
-        public Task UpdateReservationAsync(ReservationDTO res);
+        public Task UpdateReservationAsync(UpdateReservationDTO res);
         public Task DeleteReservationAsync(int resId);
     }
 }

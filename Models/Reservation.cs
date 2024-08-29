@@ -13,7 +13,7 @@ namespace RestaurantBooking.Models
 
         [Required]
         public int Guests { get; set; }
-        public string CustomerName { get; set; }
+
         public decimal TotalBill { get; set; }
 
 
@@ -29,7 +29,7 @@ namespace RestaurantBooking.Models
         public Customer Customer { get; set; }
 
         
-        // Initialize empty list upon creation
+        // Initialize list upon creation
         public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

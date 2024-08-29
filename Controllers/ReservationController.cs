@@ -101,7 +101,7 @@ namespace RestaurantBooking.Controllers
         }
 
         [HttpPost("UpdateReservation")]
-        public async Task<ActionResult> UpdateReservationAsync([FromBody] ReservationDTO resDto)
+        public async Task<ActionResult> UpdateReservationAsync([FromBody] UpdateReservationDTO resDto)
         {
             try
             {

@@ -27,7 +27,9 @@ namespace RestaurantBooking.Data.Repos
 
         public async Task<IEnumerable<Reservation>> GetAllReservationsAsync()
         {
-            return await _context.Reservations.ToListAsync();
+            return await _context.Reservations
+                .Include(r => r.Customer)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Reservation>> GetActiveReservationsAsync()
