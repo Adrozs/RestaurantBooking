@@ -1,13 +1,21 @@
 # RestaurantBooking
+A ASP.NET backend system with a database that handles restaurant reservations, customer information and ordering of dishes. The system allows for handling of tables and reservations along with making orders from a updatable menu through a web API.
+The system supports CRUD operations for all key entities (customer, table, dish and reservation) that allow for an easy and effective way to add, modify and remove components as needed. 
+
+It's built with repository and service pattern using a layered architecture. Making use of dependency injection to allow for separation of concerns, reusability and testability.
 
 
 ## Table of Contents
-- [Overview](#overview)
+- [ER-Diagram](#er-diagram)
 - [Endpoints](#endpoints)
   - [Customers](#customer)
   - [Tables](#table)
   - [Reservations](#reservation)
   - [Dishes](#dish)
+ 
+
+# ER-Diagram 
+![Er-diagram](https://github.com/Adrozs/RestaurantBooking/blob/master/erdiagram.png)
 
 # Endpoints
 
