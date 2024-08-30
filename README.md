@@ -29,24 +29,38 @@ It's built with repository and service pattern using a layered architecture. Mak
     "phoneNumber": "070123456789"
   }
 
+- **Response**:
+  - 200 OK: Customer created successfully.
+  - 400: Failed create customer: {reason}
+
+
 #### `GET /api/Customer/GetAllCustomers`
 - **Purpose**: Retrieve a list of all customers currently in the system
 - **Response**:
+  - 200 OK:
   ```json
   {
     "id": 1,
     "name": "Anders Andersson",
     "phoneNumber": "070123456789"
   }
+  ```
+  - 404 Not found: No customers found.
+  
 
 #### `GET /api/Customer/GetCustomerById/{id}`
 - **Purpose**: Retrieve a specific customer
 - **Response**:
+  
+  - 200 OK:
   ```json
   {
     "name": "Anders Andersson",
     "phoneNumber": "070123456789"
   }
+  ```
+  - 404 Not found: No matching customer found.
+
 
 #### `POST /api/Customer/UpdateCustomer`
 - **Purpose**: Change a specific customers information 
@@ -58,12 +72,22 @@ It's built with repository and service pattern using a layered architecture. Mak
     "phoneNumber": "079876543210"
   }
 
-#### `DELETE /api/Customer/DeleteCustomer/2`
+- **Response**:
+  - 200 OK: Customer updated successfully.
+  - 400: Failed to update customer. {reason}
+
+
+#### `DELETE /api/Customer/DeleteCustomer/{id}`
 - **Purpose**: Delete a specific customers from the system
+
+- **Response**:
+- 200 OK: Customer deleted successfully.
+- 400: Failed to delete customer. {reason}
+
   
 
 ## Dish
-#### `POST /api/Customer/CreateDish`
+#### `POST /api/Dish/CreateDish`
 - **Purpose**: Create a dish to be ordered
 - **Request Body**:
   ```json
@@ -73,9 +97,15 @@ It's built with repository and service pattern using a layered architecture. Mak
     "isAvailable": true
   }
 
-#### `GET /api/Customer/GetAllDishes`
+- **Response**:
+  - 200 OK: Dish created successfully.
+  - 400: Failed to create dish. {reason}
+
+
+#### `GET /api/Dish/GetAllDishes`
 - **Purpose**: Retrieve a list of all customers currently in the system
 - **Response**:
+  - 200 OK: 
   ```json
   {
     "name": "Mom's Spaghetti",
@@ -92,10 +122,14 @@ It's built with repository and service pattern using a layered architecture. Mak
     "price": 10,
     "isAvailable": false
   }
+  ```
+  - 404 Not found: No dishes were found.
 
-#### `GET /api/Customer/GetAvailableDishes`
+
+#### `GET /api/Dish/GetAvailableDishes`
 - **Purpose**: Retrieve a list of all dishes available in the system
 - **Response**:
+  - 200 OK: 
   ```json
   {
     "name": "Mom's Spaghetti",
@@ -107,18 +141,26 @@ It's built with repository and service pattern using a layered architecture. Mak
     "price": 50,
     "isAvailable": true
   }
+  ```
+  - 404 Not found: No available dishes found.
+  
 
-#### `GET /api/Customer/GetDishById`
+#### `GET /api/Dish/GetDishById/{id}`
 - **Purpose**: Retrieve a specific dish
 - **Request Body**:
+- **Response**:
+  - 200 OK: 
   ```json
   {
     "name": "Köttbullar och potatismos",
     "price": 50,
     "isAvailable": true
   }
+  ```
+  - 404 Not found: No matching dish was found.
 
-#### `POST /api/Customer/UpdateDishes`
+
+#### `POST /api/Dish/UpdateDishes`
 - **Purpose**: Change a specific dish's information 
 - **Request Body**:
   ```json
@@ -127,12 +169,26 @@ It's built with repository and service pattern using a layered architecture. Mak
     "price": 50,
     "isAvailable": true
   }
+  
+- **Response**:
+  - 200 OK: Dish successfully updated.
+  - 400: Failed to update dish. {reason}
 
-#### `DELETE /api/Customer/DeleteDish/4`
-- **Purpose**: Delete a specific dish from the system 
+
+#### `DELETE /api/Dish/DeleteDish/4`
+- **Purpose**: Delete a specific dish from the system
+- **Response**:
+  - 200 OK: Dish deleted updated.
+  - 400: Failed to delete dish. {reason}
+
+
 
 ## Reservation
-#### `POST /api/Customer/CreateReservation`
+
+#### `POST /api/Reservation/OrderDish`
+
+
+#### `POST /api/Reservation/CreateReservation`
 - **Purpose**: Create a reservation for a customer, a table and a time. (If duration is left empty a standard time of 120 minutes will be set by default)
 - **Request Body**:
   ```json
@@ -144,7 +200,7 @@ It's built with repository and service pattern using a layered architecture. Mak
     "customerId": 2
   }
 
-#### `GET /api/Customer/GetAllReservations`
+#### `GET /api/Reservation/GetAllReservations`
 - **Purpose**: Retrieve a list of all reservations
 - **Response**:
   ```json
@@ -170,7 +226,7 @@ It's built with repository and service pattern using a layered architecture. Mak
     "customerId": 42
   }
 
-#### `GET /api/Customer/GetActiveReservations`
+#### `GET /api/Reservation/GetActiveReservations`
 - **Purpose**: Retrieve a list of all future and todays reservations
 - **Response**:
   ```json
@@ -189,7 +245,7 @@ It's built with repository and service pattern using a layered architecture. Mak
     "customerId": 42
   }
 
-#### `GET /api/Customer/GetReservationById`
+#### `GET /api/Reservation/GetReservationById`
 - **Purpose**: Retrieve a specific reservation and all its details
 - **Request Body**:
   ```json
@@ -216,7 +272,7 @@ It's built with repository and service pattern using a layered architecture. Mak
   "customerId": 2
 }
 
-#### `POST /api/Customer/UpdateReservation`
+#### `POST /api/Reservation/UpdateReservation`
 - **Purpose**: Change a specific reservations information 
 - **Request Body**:
   ```json
@@ -228,11 +284,13 @@ It's built with repository and service pattern using a layered architecture. Mak
     "customerId": 42
   }
 
-#### `DELETE /api/Customer/DeleteReservation/1`
+#### `DELETE /api/Reservation/DeleteReservation/1`
 - **Purpose**: Delete a specific reservation from the system 
 
+
+
 ## Table
-#### `POST /api/Customer/CreateTable`
+#### `POST /api/Table/CreateTable`
 - **Purpose**: Create/Add a new table to be reserved
 - **Request Body**:
   ```json
@@ -241,7 +299,7 @@ It's built with repository and service pattern using a layered architecture. Mak
     "seats": 4
   }
 
-#### `GET /api/Customer/GetAllTables`
+#### `GET /api/Table/GetAllTables`
 - **Purpose**: Retrieve a list of all tables
 - **Response**:
   ```json
@@ -267,7 +325,7 @@ It's built with repository and service pattern using a layered architecture. Mak
     "reservedUntil": "2024-08-28T18:07:13.908Z"
   }
 
-#### `GET /api/Customer/GetAvailableTables`
+#### `GET /api/Table/GetAvailableTables`
 - **Purpose**: Retrieve a list of all tables available to be reserved
 - **Response**:
   ```json
@@ -284,7 +342,7 @@ It's built with repository and service pattern using a layered architecture. Mak
   "isReserved": true
   }
 
- #### `GET /api/Customer/GetTableById`
+ #### `GET /api/Table/GetTableById`
 - **Purpose**: Retrieve a specific table
 - **Request Body**:
   ```json
@@ -294,7 +352,7 @@ It's built with repository and service pattern using a layered architecture. Mak
     "isReserved": false
   }
 
-#### `POST /api/Customer/UpdateTable`
+#### `POST /api/Table/UpdateTable`
 - **Purpose**: Change a specific dish's information 
 - **Request Body**:
   ```json
