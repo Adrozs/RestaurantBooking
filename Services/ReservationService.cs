@@ -73,9 +73,6 @@ namespace RestaurantBooking.Services
             if (!await _resRepo.IsTableAvailableAsync(res.TableId, res.ReservationTime, res.ReservationDurationMinutes))
                 throw new InvalidOperationException("Table is not available at the requested time.");
 
-            //DEBUG
-            Console.WriteLine($"RES DURATION  {res.ReservationDurationMinutes} ");
-
             // Begin transaction to roll back changes in case something fails
             using var transaction = await _context.Database.BeginTransactionAsync();
 
