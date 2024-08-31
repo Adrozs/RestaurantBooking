@@ -27,7 +27,7 @@ namespace RestaurantBooking.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest("Failed to order dish: " + ex.Message);
             }
 
             return Ok("Dish successfully ordered and added to reservation.");
@@ -43,10 +43,10 @@ namespace RestaurantBooking.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest("Failed to create reservation: " + ex.Message);
             }
 
-            return Ok("Successfully created reservation");
+            return Ok("Successfully created reservation.");
         }
 
         [HttpGet("GetAllReservations")]
@@ -109,7 +109,7 @@ namespace RestaurantBooking.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest("Failed to update reservation: " + ex.Message);
             }
 
             return Ok("Successfully updated reservation");

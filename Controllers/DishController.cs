@@ -25,7 +25,7 @@ namespace RestaurantBooking.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest("Failed to create dish." + ex.Message);
             }
 
 
@@ -60,7 +60,7 @@ namespace RestaurantBooking.Controllers
             var dish = await _dishService.GetDishByIdAsync(dishId);
 
             if (dish == null)
-                return NotFound("No matching dish found.");
+                return NotFound("No matching dish was found.");
 
             return Ok(dish);
         }
@@ -74,7 +74,7 @@ namespace RestaurantBooking.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest("Failed to update dish. " + ex.Message);
             }
 
             return Ok("Dish successfully updated.");
@@ -89,7 +89,7 @@ namespace RestaurantBooking.Controllers
             }
             catch (Exception ex) 
             { 
-                return BadRequest(ex.Message); 
+                return BadRequest("Failed to delete dish. " + ex.Message); 
             }
 
             return Ok("Dish successfully deleted.");

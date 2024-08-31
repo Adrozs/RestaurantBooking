@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using RestaurantBooking.Models.DTOs.CustomerDTOs;
 using RestaurantBooking.Services.IServices;
+using System.Net;
 
 namespace RestaurantBooking.Controllers
 {
@@ -25,7 +26,7 @@ namespace RestaurantBooking.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest("Failed to create customer: " + ex.Message);
             }
 
             return Ok("Customer created successfully.");
@@ -37,7 +38,7 @@ namespace RestaurantBooking.Controllers
             var customers = await _customerService.GetAllCustomersAsync();
 
             if (customers.IsNullOrEmpty())
-                return StatusCode(404, "No customers found.");
+                return NotFound("No customers found.");
 
             return Ok(customers);
         }
@@ -47,7 +48,7 @@ namespace RestaurantBooking.Controllers
         {
             var customer = await _customerService.GetCustomerByIdAsync(customerId);
             if (customer == null)
-                return StatusCode(404, "No matching customer found.");
+                return NotFound("No matching customer found.");
 
 
             return Ok(customer);
@@ -62,7 +63,7 @@ namespace RestaurantBooking.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest("Failed to update customer. " + ex.Message);
             }
 
             return Ok("Customer updated successfully.");
@@ -77,7 +78,7 @@ namespace RestaurantBooking.Controllers
             }
             catch(Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest("Failed to delete customer. " + ex.Message);
             }
 
             return Ok("Customer deleted successfully.");

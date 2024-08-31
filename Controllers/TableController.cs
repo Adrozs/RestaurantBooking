@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using RestaurantBooking.Models.DTOs.TableDTOs;
 using RestaurantBooking.Services.IServices;
 
@@ -24,11 +25,11 @@ namespace RestaurantBooking.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest("Failed to create table: " + ex.Message);
             }
             
 
-            return Ok();
+            return Ok("Successfully created table.");
         }
 
         [HttpGet("GetAllAvailableTables")]
@@ -36,7 +37,7 @@ namespace RestaurantBooking.Controllers
         {
             var availableTables = await _tableService.GetAvailableTablesAsync();
 
-            if (availableTables == null)
+            if (availableTables.IsNullOrEmpty())
                 return NotFound("No available tables were found.");
 
             return Ok(availableTables);
