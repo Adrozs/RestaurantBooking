@@ -81,8 +81,8 @@ It's built with repository and service pattern using a layered architecture. Mak
 - **Purpose**: Delete a specific customers from the system
 
 - **Response**:
-- 200 OK: Customer deleted successfully.
-- 400: Failed to delete customer. {reason}
+  - 200 OK: Customer deleted successfully.
+  - 400: Failed to delete customer. {reason}
 
   
 
@@ -186,7 +186,19 @@ It's built with repository and service pattern using a layered architecture. Mak
 ## Reservation
 
 #### `POST /api/Reservation/OrderDish`
+- **Purpose**: Order a dish (with optional special instructions) which adds the dish to the reservation along with cost to the total bill  
+- **Request Body**:
+  ```json
+  {
+    "dishId": 0,
+    "reservationId": 0,
+    "specialInstructions": "string"
+  }
 
+- **Response**:
+  - 200 OK: Dish successfully ordered and added to reservation.
+  - 400: Failed order dish: {reason}
+    
 
 #### `POST /api/Reservation/CreateReservation`
 - **Purpose**: Create a reservation for a customer, a table and a time. (If duration is left empty a standard time of 120 minutes will be set by default)
@@ -200,54 +212,64 @@ It's built with repository and service pattern using a layered architecture. Mak
     "customerId": 2
   }
 
+- **Response**:
+  - 200 OK: Successfully created reservation.
+  - 400: Failed create reservation: {reason}
+  - 400: No matching customer found.
+  - 400: No matching table found.
+  - 400: Table is not available at the requested time.
+  - 400: Selected table has too few seats for the number of guests. Seats: YY. Guests: ZZ.
+
 #### `GET /api/Reservation/GetAllReservations`
 - **Purpose**: Retrieve a list of all reservations
 - **Response**:
+  - 200 OK: Successfully created reservation.
   ```json
   {
-    "reservationTime": "2024-08-28T16:00:35.510Z",
-    "reservationDurationMinutes": 120, 
-    "guests": 4,
-    "tableId": 3,
-    "customerId": 2
-  },
-  {
-    "reservationTime": "2024-08-28T16:00:35.510Z",
-    "reservationDurationMinutes": 120, 
-    "guests": 25,
+    "id": 8,
+    "reservationTime": "2024-08-31T11:17:47.819",
+    "reservationDurationMinutes": 60,
+    "guests": 2,
+    "customerName": "Sven Svensson",
+    "totalBill": 0,
     "tableId": 8,
-    "customerId": 4
+    "customerId": 6
   },
   {
-    "reservationTime": "2024-08-28T16:00:35.510Z",
-    "reservationDurationMinutes": 200, 
-    "guests": 1,
-    "tableId": 2,
-    "customerId": 42
+    "id": 8,
+    "reservationTime": "2024-08-31T11:17:47.819",
+    "reservationDurationMinutes": 120,
+    "guests": 2,
+    "customerName": "Anders Andersson",
+    "totalBill": 85,
+    "tableId": 3,
+    "customerId": 4
   }
+  ```
+  - 400: Failed create reservation: {reason}
 
 #### `GET /api/Reservation/GetActiveReservations`
 - **Purpose**: Retrieve a list of all future and todays reservations
 - **Response**:
+  - 200 OK:
   ```json
   {
-    "reservationTime": "2024-08-28T16:00:35.510Z",
-    "reservationDurationMinutes": 120, 
-    "guests": 25,
+    "id": 8,
+    "reservationTime": "2024-08-31T11:17:47.819",
+    "reservationDurationMinutes": 60,
+    "guests": 2,
+    "customerName": "Anders Andersson",
+    "totalBill": 0,
     "tableId": 8,
-    "customerId": 4
-  },
-  {
-    "reservationTime": "2024-08-28T16:00:35.510Z",
-    "reservationDurationMinutes": 200, 
-    "guests": 1,
-    "tableId": 2,
-    "customerId": 42
+    "customerId": 6
   }
+  ```
+  - 404 Not found: No reservations were found.
 
-#### `GET /api/Reservation/GetReservationById`
+#### `GET /api/Reservation/GetReservationById/{id}`
 - **Purpose**: Retrieve a specific reservation and all its details
-- **Request Body**:
+- **Response**:
+  - 200 OK:
   ```json
   {
   "reservationTime": "2024-08-28T12:54:58.803",
@@ -270,23 +292,34 @@ It's built with repository and service pattern using a layered architecture. Mak
   ],
   "tableId": 4,
   "customerId": 2
-}
+  }
+  ```  
+  - 404 Not found: No active reservations were found.
+
 
 #### `POST /api/Reservation/UpdateReservation`
 - **Purpose**: Change a specific reservations information 
 - **Request Body**:
   ```json
   {
+    "id": 2,
     "reservationTime": "2024-08-28T16:00:35.510Z",
     "reservationDurationMinutes": 200, 
     "guests": 87,
+    "totalBill": 0,
     "tableId": 2,
     "customerId": 42
   }
+  
+- **Response**:
+  - 200 OK: Reservation successfully updated.
+  - 400: Failed to update reservation: {reason}
 
-#### `DELETE /api/Reservation/DeleteReservation/1`
+#### `DELETE /api/Reservation/DeleteReservation/{id}`
 - **Purpose**: Delete a specific reservation from the system 
-
+- **Response**:
+  - 200 OK: Reservation successfully deleted.
+  - 400: Failed to delete reservation: {reason}
 
 
 ## Table
@@ -298,59 +331,61 @@ It's built with repository and service pattern using a layered architecture. Mak
     "tableNumber": 37,
     "seats": 4
   }
+- **Response**:
+  - 200 OK: Table successfully created.
+  - 400: Failed to create table: {reason}
 
 #### `GET /api/Table/GetAllTables`
 - **Purpose**: Retrieve a list of all tables
 - **Response**:
+  -  200 OK:
   ```json
   {
-    "id": 2,
-    "tableNumber": 8,
-    "seats": 2,
-    "isReserved": false,
-    "reservedUntil": "2024-08-10T16:07:13.908Z"
+    "id": 9,
+    "tableNumber": 77,
+    "seats": 6,
+    "reservedUntil": "0001-01-01T00:00:00"
   },
   {
-    "id": 5,
-    "tableNumber": 37,
-    "seats": 9,
-    "isReserved": true,
-    "reservedUntil": "2024-08-28T16:07:13.908Z"
-  },
-  {
-    "id": 6,
-    "tableNumber": 4,
-    "seats": 4,
-    "isReserved": true,
-    "reservedUntil": "2024-08-28T18:07:13.908Z"
+    "id": 10,
+    "tableNumber": 3,
+    "seats": 6,
+    "reservedUntil": "0001-01-01T00:00:00"
   }
+   ```
+  - 404 Not found: No tables were found
 
 #### `GET /api/Table/GetAvailableTables`
 - **Purpose**: Retrieve a list of all tables available to be reserved
 - **Response**:
   ```json
   {
-    "id": 4,
+    "id": 8,
     "tableNumber": 11,
-    "seats": 4,
-    "isReserved": false
+    "seats": 2,
+    "reservedUntil": "2024-08-31T12:17:47.819"
   },
   {
-  "id": 7,
-  "tableNumber": 22,
-  "seats": 9,
-  "isReserved": true
+    "id": 9,
+    "tableNumber": 77,
+    "seats": 6,
+    "reservedUntil": "0001-01-01T00:00:00"
   }
+  ```
+  - 404 Not found: No available tables were found
 
  #### `GET /api/Table/GetTableById`
 - **Purpose**: Retrieve a specific table
 - **Request Body**:
   ```json
   {
-    "tableNumber": 11,
-    "seats": 4,
-    "isReserved": false
+    "id": 1,
+    "tableNumber": 3,
+    "seats": 2,
+    "reservedUntil": "2024-08-31T12:46:11.791Z"
   }
+  ```
+  - 404 Not found: No matching table were found
 
 #### `POST /api/Table/UpdateTable`
 - **Purpose**: Change a specific dish's information 
@@ -362,6 +397,12 @@ It's built with repository and service pattern using a layered architecture. Mak
   "seats": 27,
   "reservedUntil": "2024-08-28T16:09:44.434Z"
   }
+- **Response**:
+  - 200 OK: Table successfully updated.
+  - 400: Failed to update table: {reason}
 
 #### `DELETE /api/Customer/DeleteTable/2`
-- **Purpose**: Delete a specific table from the system 
+- **Purpose**: Delete a specific table from the system
+- **Response**:
+  - 200 OK: Table successfully deleted.
+  - 400: Failed to delete table: {reason}
