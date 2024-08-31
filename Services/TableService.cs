@@ -27,6 +27,7 @@ namespace RestaurantBooking.Services
             {
                 Seats = tableDto.Seats,
                 TableNumber = tableDto.TableNumber,
+                ReservedUntil = DateTime.MinValue,
             };
 
             await _tableRepo.CreateTableAsync(table);

@@ -13,7 +13,6 @@ namespace RestaurantBooking.Models
 
         [Required]
         public int Guests { get; set; }
-
         public decimal TotalBill { get; set; }
 
 

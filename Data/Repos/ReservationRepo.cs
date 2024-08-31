@@ -34,7 +34,10 @@ namespace RestaurantBooking.Data.Repos
 
         public async Task<IEnumerable<Reservation>> GetActiveReservationsAsync()
         {
-            return await _context.Reservations.Where(r => r.ReservationTime >= DateTime.Today).ToListAsync();
+            return await _context.Reservations
+                .Include(r => r.Customer)
+                .Where(r => r.ReservationTime >= DateTime.Today)
+                .ToListAsync();
         }
 
         public async Task<Reservation> GetReservationByIdAsync(int resId)
@@ -66,6 +69,7 @@ namespace RestaurantBooking.Data.Repos
         public async Task<Reservation> GetReservationAndOrderedDishesByIdAsync(int resId)
         {
             return await _context.Reservations
+                .Include(r => r.Customer)
                 .Include(r => r.Orders)
                 .ThenInclude(o => o.Dish)
                 .SingleOrDefaultAsync(r => r.Id == resId);

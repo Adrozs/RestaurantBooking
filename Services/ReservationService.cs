@@ -5,6 +5,7 @@ using RestaurantBooking.Data.Repos.IRepos;
 using RestaurantBooking.Data;
 using RestaurantBooking.Models.DTOs.OrderDTOs;
 using RestaurantBooking.Models.DTOs.DishDTOs;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace RestaurantBooking.Services
 {
@@ -72,6 +73,8 @@ namespace RestaurantBooking.Services
             if (!await _resRepo.IsTableAvailableAsync(res.TableId, res.ReservationTime, res.ReservationDurationMinutes))
                 throw new InvalidOperationException("Table is not available at the requested time.");
 
+            //DEBUG
+            Console.WriteLine($"RES DURATION  {res.ReservationDurationMinutes} ");
 
             // Begin transaction to roll back changes in case something fails
             using var transaction = await _context.Database.BeginTransactionAsync();
@@ -83,14 +86,14 @@ namespace RestaurantBooking.Services
                 if (customer == null)
                     throw new InvalidOperationException("No matching customer was found.");
 
-
+      
                 // Check if table exists and update reserved time
                 var table = await _tableRepo.GetTableByIdAsync(res.TableId);
                 if (table == null)
                     throw new InvalidOperationException("No matching table was found.");
 
                 if (table.Seats < res.Guests)
-                    throw new InvalidOperationException($"Selected table has too few seats ({table.Seats}) for the number of guests ({res.Guests}).");
+                    throw new InvalidOperationException($"Selected table has too few seats for the number of guests. Seats: {table.Seats}. Guests: {res.Guests}.");
 
                 table.ReservedUntil = res.ReservationTime.AddMinutes(res.ReservationDurationMinutes);
 
@@ -114,6 +117,9 @@ namespace RestaurantBooking.Services
                 };
 
                 await _resRepo.CreateReservationAsync(newReservation);
+
+                await transaction.CommitAsync();
+
             }
             catch
             {
@@ -191,7 +197,7 @@ namespace RestaurantBooking.Services
                     DishName = o.Dish.Name,
                     Price = o.Dish.Price,
                     SpecialInstructions = o.SpecialInstructions
-                })
+                }).ToList()
             };
         }
 

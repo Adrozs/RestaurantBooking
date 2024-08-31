@@ -11,7 +11,7 @@ namespace RestaurantBooking.Models.DTOs.ReservationDTOs
         public decimal TotalBill { get; set; }
 
 
-        public IEnumerable<OrderedDishDTO> OrderedDishes { get; set; }
+        public IEnumerable<OrderedDishDTO> OrderedDishes { get; set; } 
         public int TableId { get; set; }
         public int CustomerId { get; set; }
     }
