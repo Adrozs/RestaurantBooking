@@ -19,6 +19,7 @@ namespace RestaurantBooking.Services
             var newDish = new Dish
             {
                 Name = dish.Name,
+                Description = dish.Description,
                 Price = dish.Price,
                 IsAvailable = dish.IsAvailable,
             };
@@ -45,6 +46,7 @@ namespace RestaurantBooking.Services
             {
                 Id = d.Id,
                 Name = d.Name,
+                Description = d.Description,
                 Price = d.Price,
                 IsAvailable = d.IsAvailable
             });
@@ -60,6 +62,7 @@ namespace RestaurantBooking.Services
             {
                 Id = d.Id,
                 Name = d.Name,
+                Description = d.Description,
                 Price = d.Price,
                 IsAvailable = d.IsAvailable
             });
@@ -75,6 +78,7 @@ namespace RestaurantBooking.Services
             {
                 Id = dish.Id,
                 Name = dish.Name,
+                Description = dish.Description,
                 Price = dish.Price,
                 IsAvailable = dish.IsAvailable,
             };
@@ -89,6 +93,7 @@ namespace RestaurantBooking.Services
                 throw new InvalidOperationException("Dish was not found.");
 
             existingDish.Name = dish.Name;
+            existingDish.Description = dish.Description;
             existingDish.Price = dish.Price;
             existingDish.IsAvailable = dish.IsAvailable; 
 
