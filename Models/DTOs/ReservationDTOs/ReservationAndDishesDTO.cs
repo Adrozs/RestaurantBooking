@@ -4,6 +4,7 @@ namespace RestaurantBooking.Models.DTOs.ReservationDTOs
 {
     public class ReservationAndDishesDTO
     {
+        public int Id { get; set; }
         public DateTime ReservationTime { get; set; }
         public int ReservationDurationMinutes { get; set; }
         public int Guests { get; set; }

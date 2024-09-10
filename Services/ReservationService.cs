@@ -181,6 +181,7 @@ namespace RestaurantBooking.Services
 
             return new ReservationAndDishesDTO
             {
+                Id=res.Id,
                 ReservationTime = res.ReservationTime,
                 ReservationDurationMinutes = res.ReservationDurationMinutes,
                 Guests = res.Guests,
@@ -210,7 +211,6 @@ namespace RestaurantBooking.Services
             existingRes.ReservationDurationMinutes = resDto.ReservationDurationMinutes;
             existingRes.Guests = resDto.Guests;
             existingRes.TotalBill = resDto.TotalBill;
-
 
             // Update foreign keys (if customer switches table or if a customer cancels and a new customer is put on the reservation or similar)
 
