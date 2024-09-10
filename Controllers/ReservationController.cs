@@ -100,7 +100,7 @@ namespace RestaurantBooking.Controllers
             }
         }
 
-        [HttpPost("UpdateReservation")]
+        [HttpPut("UpdateReservation")]
         public async Task<ActionResult> UpdateReservationAsync([FromBody] UpdateReservationDTO resDto)
         {
             try
