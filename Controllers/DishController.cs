@@ -65,7 +65,7 @@ namespace RestaurantBooking.Controllers
             return Ok(dish);
         }
 
-        [HttpPost("UpdateDish")]
+        [HttpPut("UpdateDish")]
         public async Task<ActionResult> UpdateDishAsync([FromBody] DishDTO dish)
         {
             try

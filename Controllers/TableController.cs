@@ -65,7 +65,7 @@ namespace RestaurantBooking.Controllers
             return Ok(table);
         }
 
-        [HttpPost("UpdateTable")]
+        [HttpPut("UpdateTable")]
         public async Task<ActionResult<TableDTO>> UpdateTableAsync([FromBody] UpdateTableDTO table)
         {
             try

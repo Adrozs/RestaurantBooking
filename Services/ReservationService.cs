@@ -75,7 +75,6 @@ namespace RestaurantBooking.Services
 
             // Begin transaction to roll back changes in case something fails
             using var transaction = await _context.Database.BeginTransactionAsync();
-
             try
             {
                 // Check if customer exists to connect reservation to

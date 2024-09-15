@@ -54,7 +54,7 @@ namespace RestaurantBooking.Controllers
             return Ok(customer);
         }
 
-        [HttpPost("UpdateCustomer")]
+        [HttpPut("UpdateCustomer")]
         public async Task<ActionResult> UpdateCustomerAsync([FromBody] CustomerDTO customer)
         {
             try
