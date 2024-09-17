@@ -17,16 +17,11 @@ namespace RestaurantBooking.Services
 
         public async Task CreateTableAsync(CreateTableDTO tableDto)
         {
-            // Make sure table number isn't already taken
-            var existingTable = await _tableRepo.GetTableByTableNumberAsync(tableDto.TableNumber);
-            if (existingTable != null)
-                throw new InvalidOperationException("Table number already taken.");
 
             // Map dto to object
             var table = new Table
             {
                 Seats = tableDto.Seats,
-                TableNumber = tableDto.TableNumber,
                 ReservedUntil = DateTime.MinValue,
             };
 
@@ -51,7 +46,6 @@ namespace RestaurantBooking.Services
             return availableTables.Select(t => new TableDTO
             {
                 Id = t.Id,
-                TableNumber = t.TableNumber,
                 Seats = t.Seats,
                 ReservedUntil = t.ReservedUntil
             }).ToList();
@@ -68,7 +62,6 @@ namespace RestaurantBooking.Services
             return allTables.Select(t => new TableDTO
             {
                 Id= t.Id,
-                TableNumber = t.TableNumber,
                 Seats = t.Seats,
                 ReservedUntil = t.ReservedUntil
             }).ToList();
@@ -85,7 +78,6 @@ namespace RestaurantBooking.Services
             return new TableDTO
             {
                 Id = table.Id,
-                TableNumber = table.TableNumber,
                 Seats = table.Seats,
                 ReservedUntil = table.ReservedUntil
             };
@@ -93,10 +85,11 @@ namespace RestaurantBooking.Services
 
         public async Task UpdateTableAsync(UpdateTableDTO tableDto)
         {
+            // Not using table number anymore
             // Make sure table number isn't already taken
-            var existingTable = await _tableRepo.GetTableByTableNumberAsync(tableDto.TableNumber);
-            if (existingTable != null)
-                throw new InvalidOperationException("Table number already taken.");
+            //var existingTable = await _tableRepo.GetTableByTableNumberAsync(tableDto.TableNumber);
+            //if (existingTable != null)
+            //    throw new InvalidOperationException("Table number already taken.");
 
             // Get table
             var table = await _tableRepo.GetTableByIdAsync(tableDto.Id);
@@ -105,7 +98,6 @@ namespace RestaurantBooking.Services
                 throw new InvalidOperationException("Table was not found.");
 
             // Update properties
-            table.TableNumber = tableDto.TableNumber;
             table.Seats = tableDto.Seats;
             table.ReservedUntil = tableDto.ReservedUntil;
 

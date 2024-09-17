@@ -8,9 +8,6 @@ namespace RestaurantBooking.Models
         public int Id { get; set; }
 
         [Required]
-        public int TableNumber { get; set; }
-
-        [Required]
         public int Seats { get; set; }
 
         public DateTime? ReservedUntil { get; set; }
