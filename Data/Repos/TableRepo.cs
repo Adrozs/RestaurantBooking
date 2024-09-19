@@ -41,10 +41,10 @@ namespace RestaurantBooking.Data.Repos
             return await _context.Tables.SingleOrDefaultAsync(t => t.Id == tableId);
         }
 
-        public async Task<Table> GetTableByTableNumberAsync(int tableNumber)
-        {
-            return await _context.Tables.SingleOrDefaultAsync(t => t.TableNumber == tableNumber); 
-        }
+        //public async Task<Table> GetTableByTableNumberAsync(int tableNumber)
+        //{
+        //    return await _context.Tables.SingleOrDefaultAsync(t => t.TableNumber == tableNumber); 
+        //}
 
         public async Task UpdateTableAsync(Table table)
         {
