@@ -91,16 +91,16 @@ namespace RestaurantBooking.Services
                 if (table.Seats < res.Guests)
                     throw new InvalidOperationException($"Selected table has too few seats for the number of guests. Seats: {table.Seats}. Guests: {res.Guests}.");
 
+                // If no duration was sent in then default duration of 2 hours is applied
+                if (res.ReservationDurationMinutes == 0)
+                    res.ReservationDurationMinutes = 120;
+
                 table.ReservedUntil = res.ReservationTime.AddMinutes(res.ReservationDurationMinutes);
 
                 await _tableRepo.UpdateTableAsync(table);
 
 
                 // Create reservation
-
-                // If no duration was sent in then default duration of 2 hours is applied
-                if (res.ReservationDurationMinutes == 0)
-                    res.ReservationDurationMinutes = 120;
 
                 var newReservation = new Reservation
                 {
