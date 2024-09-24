@@ -7,5 +7,6 @@ namespace RestaurantBooking.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        // Add identity
     }
 }
