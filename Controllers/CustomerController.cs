@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using RestaurantBooking.Models;
 using RestaurantBooking.Models.DTOs.CustomerDTOs;
 using RestaurantBooking.Services.IServices;
 using System.Net;
@@ -22,14 +23,19 @@ namespace RestaurantBooking.Controllers
         {
             try
             {
-                await _customerService.CreateCustomerAsync(customer);
+                var customerId = await _customerService.CreateCustomerAsync(customer);
+
+                if (customerId == null)
+                    return StatusCode(500, "An unexpected error occurred while creating customer.");
+
+                return Ok(customerId);
             }
             catch (Exception ex)
             {
                 return BadRequest("Failed to create customer: " + ex.Message);
             }
 
-            return Ok("Customer created successfully.");
+           
         }
 
         [HttpGet("GetAllCustomers")]

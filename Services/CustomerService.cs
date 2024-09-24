@@ -15,7 +15,7 @@ namespace RestaurantBooking.Services
             _customerRepo = customerRepo;
         }
 
-        public async Task CreateCustomerAsync(CreateCustomerDTO customer)
+        public async Task<int> CreateCustomerAsync(CreateCustomerDTO customer)
         {
             var newCustomer = new Customer
             {
@@ -23,7 +23,8 @@ namespace RestaurantBooking.Services
                 PhoneNumber = customer.PhoneNumber,
             };
 
-            await _customerRepo.CreateCustomerAsync(newCustomer);
+            // Returns customer id
+            return await _customerRepo.CreateCustomerAsync(newCustomer); 
         }
 
 
