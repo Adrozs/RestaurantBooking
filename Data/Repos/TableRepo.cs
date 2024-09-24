@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantBooking.Data.Repos.IRepos;
 using RestaurantBooking.Models;
+using RestaurantBooking.Models.DTOs.TableDTOs;
 
 namespace RestaurantBooking.Data.Repos
 {
@@ -58,6 +59,39 @@ namespace RestaurantBooking.Data.Repos
             
             _context.Update(table);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<AvailableTableTimesDTO>> GetAvailableTableTimesAsync(DateTime selectedDate, int guests)
+        {
+            int startTime = 12;
+            int endTime = 22;
+            var availableTablesList = new List<AvailableTableTimesDTO>();
+            
+            // Iterate over each hour and save available tables
+            for (int i = startTime; i <= endTime; i++)
+            {
+                // Create a new DateTime for the current hour being checked
+                DateTime currentHour = new DateTime(selectedDate.Year, selectedDate.Month, selectedDate.Day, i, 0, 0);
+
+                // Find the first available table that has enough or more seats and is free at the hour we're checking
+                var table = await _context.Tables.FirstOrDefaultAsync(t => 
+                    t.Seats >= guests && 
+                    t.ReservedUntil == null || t.ReservedUntil < currentHour);
+
+                // If null skip
+                if (table != null)
+                {
+                    // Add table id and the available time to the list
+                    availableTablesList.Add(new AvailableTableTimesDTO {
+                        Id = table.Id,
+                        AvailableTime = currentHour,
+                    });
+
+                }
+
+            }
+
+            return availableTablesList;
         }
     }
 }

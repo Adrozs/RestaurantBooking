@@ -96,5 +96,19 @@ namespace RestaurantBooking.Controllers
 
             return Ok("Table successfully deleted.");
         }
+
+        [HttpPost("GetAvailableTableTimes")]
+        public async Task<ActionResult<IEnumerable<AvailableTableTimesDTO>>> GetAvailableTableTimes([FromBody] AvailableTableTimesReqDTO requestDto)
+        {
+            try
+            {
+                var availableTables = await _tableService.GetAvailableTableTimesAsync(requestDto);
+                return Ok(availableTables);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

@@ -10,5 +10,7 @@ namespace RestaurantBooking.Services.IServices
         public Task<TableDTO> GetTableByIdAsync(int tableId);
         public Task UpdateTableAsync(UpdateTableDTO table);
         public Task DeleteTableAsync(int tableId);
+        public Task<List<AvailableTableTimesDTO>> GetAvailableTableTimesAsync(AvailableTableTimesReqDTO reqDto);
+
     }
 }

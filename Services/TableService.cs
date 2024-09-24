@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.IdentityModel.Tokens;
 using RestaurantBooking.Data.Repos.IRepos;
 using RestaurantBooking.Models;
 using RestaurantBooking.Models.DTOs.TableDTOs;
@@ -103,5 +104,16 @@ namespace RestaurantBooking.Services
 
             await _tableRepo.UpdateTableAsync(table);
         }
+
+        public async Task<List<AvailableTableTimesDTO>> GetAvailableTableTimesAsync(AvailableTableTimesReqDTO reqDto)
+        {
+            var tables = await _tableRepo.GetAvailableTableTimesAsync(reqDto.SelectedDate, reqDto.NumberOfGuests);
+
+            if (tables.IsNullOrEmpty())
+                throw new InvalidOperationException("No available tables were found.");
+
+            return tables;
+        }
+
     }
 }

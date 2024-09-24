@@ -1,4 +1,5 @@
 ﻿using RestaurantBooking.Models;
+using RestaurantBooking.Models.DTOs.TableDTOs;
 
 namespace RestaurantBooking.Data.Repos.IRepos
 {
@@ -12,5 +13,6 @@ namespace RestaurantBooking.Data.Repos.IRepos
         public Task UpdateTableAsync(Table table);
         public Task DeleteTableAsync(Table table);
         public Task ReserveUntilAsync(Table table, DateTime resTime);
+        public Task<List<AvailableTableTimesDTO>> GetAvailableTableTimesAsync(DateTime selectedDate, int guests);
     }
 }
