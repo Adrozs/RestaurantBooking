@@ -25,6 +25,14 @@ namespace RestaurantBooking
             // Add services to the container.
             builder.Services.AddDbContext<BookingDbContext>(options => { options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); });
 
+            // Add CORS
+            builder.Services.AddCors(options => {
+                options.AddPolicy("LocalHostReact", policy => {
+                    policy.WithOrigins("http://localhost:5173")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                }); });
+
             // Add identity
             builder.Services.AddIdentity<User, IdentityRole>(options =>
             {
@@ -136,6 +144,9 @@ namespace RestaurantBooking
             }
 
             app.UseHttpsRedirection();
+
+            // Apply CORS policy
+            app.UseCors("LocalHostReact");
 
             app.UseAuthorization();
 
