@@ -34,17 +34,17 @@ namespace RestaurantBooking
                 }); });
 
             // Add identity
-            builder.Services.AddIdentity<User, IdentityRole>(options =>
-            {
-                // Password requirements
-                options.Password.RequiredLength = 8;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireDigit = true;
-                options.Password.RequireNonAlphanumeric = true;
-            })
-            .AddEntityFrameworkStores<BookingDbContext>() // Connect Identity to the db context
-            .AddDefaultTokenProviders();
+            //builder.Services.AddIdentity<User, IdentityRole>(options =>
+            //{
+            //    // Password requirements
+            //    options.Password.RequiredLength = 8;
+            //    options.Password.RequireLowercase = true;
+            //    options.Password.RequireUppercase = true;
+            //    options.Password.RequireDigit = true;
+            //    options.Password.RequireNonAlphanumeric = true;
+            //})
+            //.AddEntityFrameworkStores<BookingDbContext>() // Connect Identity to the db context
+            //.AddDefaultTokenProviders();
 
             ConfigurationManager configuration = builder.Configuration;
 

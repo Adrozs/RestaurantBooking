@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestaurantBooking.Models
 {
@@ -13,6 +14,8 @@ namespace RestaurantBooking.Models
 
         [Required]
         public int Guests { get; set; }
+
+        [Column(TypeName = "decimal(18,4)")]
         public decimal TotalBill { get; set; }
 
 

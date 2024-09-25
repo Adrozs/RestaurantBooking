@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿//using Microsoft.AspNetCore.Identity;
 
-namespace RestaurantBooking.Models
-{
-    public class User : IdentityUser
-    {
-    }
-}
+//namespace RestaurantBooking.Models
+//{
+//    public class User : IdentityUser
+//    {
+//    }
+//}
