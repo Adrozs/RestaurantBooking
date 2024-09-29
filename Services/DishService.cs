@@ -22,6 +22,7 @@ namespace RestaurantBooking.Services
                 Description = dish.Description,
                 Price = dish.Price,
                 IsAvailable = dish.IsAvailable,
+                MealType = dish.MealType,
             };
 
             await _dishRepo.CreateDishAsync(newDish);
@@ -48,7 +49,8 @@ namespace RestaurantBooking.Services
                 Name = d.Name,
                 Description = d.Description,
                 Price = d.Price,
-                IsAvailable = d.IsAvailable
+                IsAvailable = d.IsAvailable,
+                MealType = d.MealType
             });
         }
 
@@ -64,7 +66,8 @@ namespace RestaurantBooking.Services
                 Name = d.Name,
                 Description = d.Description,
                 Price = d.Price,
-                IsAvailable = d.IsAvailable
+                IsAvailable = d.IsAvailable,
+                MealType = d.MealType
             });
         }
 
@@ -81,6 +84,7 @@ namespace RestaurantBooking.Services
                 Description = dish.Description,
                 Price = dish.Price,
                 IsAvailable = dish.IsAvailable,
+                MealType = dish.MealType
             };
 
             return dishDto;
@@ -95,7 +99,8 @@ namespace RestaurantBooking.Services
             existingDish.Name = dish.Name;
             existingDish.Description = dish.Description;
             existingDish.Price = dish.Price;
-            existingDish.IsAvailable = dish.IsAvailable; 
+            existingDish.IsAvailable = dish.IsAvailable;
+            existingDish.MealType = dish.MealType;
 
             await _dishRepo.UpdateDishAsync(existingDish);
         }

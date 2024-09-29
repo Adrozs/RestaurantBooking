@@ -23,6 +23,9 @@ namespace RestaurantBooking.Models
         [Required]
         public bool IsAvailable { get; set; }
 
+        [Required]
+        public string MealType { get; set; }
+
         //public string ImgUrl { get; set; }
     }
 }
