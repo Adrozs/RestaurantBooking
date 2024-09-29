@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using RestaurantBooking.Models.DTOs.DishDTOs;
 using RestaurantBooking.Services.IServices;
@@ -16,6 +17,7 @@ namespace RestaurantBooking.Controllers
             _dishService = dishService;
         }
 
+        [Authorize]
         [HttpPost("CreateDish")]
         public async Task<ActionResult> CreateDishAsync([FromBody] CreateDishDTO dish)
         {
@@ -65,6 +67,7 @@ namespace RestaurantBooking.Controllers
             return Ok(dish);
         }
 
+        [Authorize]
         [HttpPut("UpdateDish")]
         public async Task<ActionResult> UpdateDishAsync([FromBody] DishDTO dish)
         {
@@ -80,6 +83,7 @@ namespace RestaurantBooking.Controllers
             return Ok("Dish successfully updated.");
         }
 
+        [Authorize]
         [HttpDelete("DeleteDish")]
         public async Task<ActionResult> DeleteDishAsync([FromQuery] int dishId)
         {

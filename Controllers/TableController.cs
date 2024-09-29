@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using RestaurantBooking.Models.DTOs.TableDTOs;
 using RestaurantBooking.Services.IServices;
@@ -16,6 +17,7 @@ namespace RestaurantBooking.Controllers
             _tableService = tableService;
         }
 
+        [Authorize]
         [HttpPost("CreateTable")]
         public async Task<ActionResult<TableDTO>> CreateTableAsync([FromBody] CreateTableDTO table)
         {
@@ -65,6 +67,7 @@ namespace RestaurantBooking.Controllers
             return Ok(table);
         }
 
+        [Authorize]
         [HttpPut("UpdateTable")]
         public async Task<ActionResult<TableDTO>> UpdateTableAsync([FromBody] UpdateTableDTO table)
         {
@@ -81,6 +84,7 @@ namespace RestaurantBooking.Controllers
             return Ok("Table successfully updated.");
         }
 
+        [Authorize]
         [HttpDelete("DeleteTable")]
         public async Task<ActionResult<TableDTO>> DeleteTableAsync([FromQuery] int tableId)
         {

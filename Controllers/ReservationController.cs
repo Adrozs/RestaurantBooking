@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using RestaurantBooking.Models.DTOs.OrderDTOs;
@@ -100,6 +101,7 @@ namespace RestaurantBooking.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("UpdateReservation")]
         public async Task<ActionResult> UpdateReservationAsync([FromBody] UpdateReservationDTO resDto)
         {
@@ -115,6 +117,7 @@ namespace RestaurantBooking.Controllers
             return Ok("Successfully updated reservation");
         }
 
+        [Authorize]
         [HttpDelete("DeleteReservation")]
         public async Task<ActionResult> DeleteReservationAsync(int resId)
         {
