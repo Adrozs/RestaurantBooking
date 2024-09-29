@@ -34,17 +34,17 @@ namespace RestaurantBooking
                 }); });
 
             // Add identity
-            //builder.Services.AddIdentity<User, IdentityRole>(options =>
-            //{
-            //    // Password requirements
-            //    options.Password.RequiredLength = 8;
-            //    options.Password.RequireLowercase = true;
-            //    options.Password.RequireUppercase = true;
-            //    options.Password.RequireDigit = true;
-            //    options.Password.RequireNonAlphanumeric = true;
-            //})
-            //.AddEntityFrameworkStores<BookingDbContext>() // Connect Identity to the db context
-            //.AddDefaultTokenProviders();
+            builder.Services.AddIdentity<User, IdentityRole>(options =>
+            {
+                // Password requirements
+                options.Password.RequiredLength = 8;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireDigit = true;
+                options.Password.RequireNonAlphanumeric = true;
+            })
+            .AddEntityFrameworkStores<BookingDbContext>() // Connect Identity to the db context
+            .AddDefaultTokenProviders();
 
             ConfigurationManager configuration = builder.Configuration;
 
@@ -119,9 +119,6 @@ namespace RestaurantBooking
             });
 
 
-
-
-
             // Add services to scope
             builder.Services.AddScoped<ITableService, TableService>();
             builder.Services.AddScoped<ITableRepo, TableRepo>();
@@ -131,6 +128,9 @@ namespace RestaurantBooking
             builder.Services.AddScoped<IDishRepo, DishRepo>();
             builder.Services.AddScoped<IReservationService, ReservationService>();
             builder.Services.AddScoped<IReservationRepo, ReservationRepo>();
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IUserRepo, UserRepo>();
+            builder.Services.AddScoped<IJwtRepo, JwtRepo>();
 
 
 
