@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using RestaurantBooking.Models.DTOs;
@@ -17,17 +19,28 @@ namespace RestaurantBooking.Controllers
             _userService = userService;
         }
 
-
+        [AllowAnonymous]
         [HttpPost("AdminLogin")]
         public async Task<IActionResult> AdminLoginAsync(UserCredsDto userCredsDto)
         {
             try
             {
+                // Verify login and get jwt
                 string jwt = await _userService.LoginAsync(userCredsDto);
                 if (jwt.IsNullOrEmpty())
-                    return BadRequest("An unexpected error occurred while trying to login.");
+                    return Unauthorized("Invalid credentials.");
 
-                return Ok(jwt);
+                // Set the jwt in the http cookie
+                Response.Cookies.Append("jwt", jwt, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = DateTime.Now.AddHours(3)
+                });
+
+
+                return Ok(new { token = jwt, message = "Login successful." });
             }
             catch (Exception ex)
             {
