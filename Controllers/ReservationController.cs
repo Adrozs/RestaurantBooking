@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -50,6 +51,7 @@ namespace RestaurantBooking.Controllers
             return Ok("Successfully created reservation.");
         }
 
+        [Authorize]
         [HttpGet("GetAllReservations")]
         public async Task<ActionResult<IEnumerable<ReservationDTO>>> GetAllReservationsAsync()
         {
@@ -67,6 +69,7 @@ namespace RestaurantBooking.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("GetActiveReservations")]
         public async Task<ActionResult<IEnumerable<ReservationDTO>>> GetActiveReservationsAsync()
         {
@@ -84,6 +87,7 @@ namespace RestaurantBooking.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("GetReservationById")]
         public async Task<ActionResult<ReservationAndDishesDTO>> GetReservationByIdAsync([FromQuery] int resId)
         {

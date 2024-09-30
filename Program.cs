@@ -30,7 +30,8 @@ namespace RestaurantBooking
                 options.AddPolicy("LocalHostReact", policy => {
                     policy.WithOrigins("http://localhost:5173")
                     .AllowAnyHeader()
-                    .AllowAnyMethod();
+                    .AllowAnyMethod()
+                    .AllowCredentials();
                 }); });
 
             // Add identity
@@ -70,12 +71,23 @@ namespace RestaurantBooking
                         ValidateIssuer = true,
                         ValidateAudience = true,
                         ValidateLifetime = true,
+                        //ValidateIssuerSigningKey = true,
                         ValidIssuer = configuration["Jwt:Issuer"],
                         ValidAudience = configuration["Jwt:Audience"],
 
                         // Symetric key lets the system know the same secret is used for both signing and verifying the JWT.Then encodes it into bytes
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Secret"]))
                     };
+
+                    // This ensures the JWT is extracted from the cookies
+                    //options.Events = new JwtBearerEvents
+                    //{
+                    //    OnMessageReceived = context =>
+                    //    {
+                    //        context.Token = context.Request.Cookies["jwt"]; // Extract the JWT from cookies
+                    //        return Task.CompletedTask;
+                    //    }
+                    //};
                 });
 
             builder.Services.AddAuthorization();
@@ -148,6 +160,7 @@ namespace RestaurantBooking
             // Apply CORS policy
             app.UseCors("LocalHostReact");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
